@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Common/">
+    <Project Path="Shared/Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/Core/" />
+  <Folder Name="/src/Infrastructure/" />
+  <Folder Name="/src/Presentation/">
+    <Project Path="WaspEngine/waspengine.client/waspengine.client.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="WaspEngine/WaspEngine.Server/WaspEngine.Server.csproj" />
+  </Folder>
+</Solution>

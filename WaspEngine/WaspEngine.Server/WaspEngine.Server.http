@@ -1,0 +1,6 @@
+@WaspEngine.Server_HostAddress = http://localhost:5296
+
+GET {{WaspEngine.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

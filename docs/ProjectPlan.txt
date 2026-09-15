@@ -1,0 +1,53 @@
+CONTEXT
+
+1. Create game with UI & API layer
+2. Ensure game is runnable/testable on Dotnet Platform
+3. Ensure game engine is able to perform state management on the following
+    a. Methods to manage playing game rules
+    b. Methods to manage completion of game
+    c. Methods to reset game
+4. Frontend engine performs seamless state management from backend API 
+5. Perform testing 
+
+BUSINESS DATA
+
+1. Game session [Object]:
+    a. Wasp [Collection]
+    b. GameStatus [Bool]
+
+2. Wasp [Abstract]:
+    a. Queen (Default Count = 1) --> Count | Energy Score | IsKnocked
+    b. Drones (Default Count = 5) --> Count | Energy Score | IsKnocked
+    c. Workers (Default Count = 7) --> Count | Energy Score | IsKnocked
+
+3. Player (Optional) [Object]:
+    a. Name
+    b. Game session [Collection]
+
+BUSINESS LOGIC
+
+1. Backend engine:
+    a. Handles game logic
+        i. Create game
+        ii. Reset game
+        iii. Delete game (optional)
+        iv. Get game state
+        v. Get queen state
+        vi. Get wasps state
+        vii. Update game status
+    b. Handles wasp logic:
+        i. Damage wasp
+        ii. Update wasp state
+        iii. Reset wasp energy
+    c. Handles player logic (Optional)
+        i. Multiple game sessions per player
+        ii. Global leaderboard
+
+2. Frontend engine
+    a. Handles wasp timer
+    b. Handles  
+
+CONSTRAINTS
+
+1. Few hours
+2. 
