@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Abstracts.Repositories
 {
@@ -6,6 +6,8 @@ namespace Application.Abstracts.Repositories
     {
         public Task<IEnumerable<Game>> GetAllAsync();
 
-        public Task AddAsync(Game game);
+        public Task<Game?> GetByIdAsync(long id);
+
+        public Task<Game> AddAsync(Game game);
     }
 }

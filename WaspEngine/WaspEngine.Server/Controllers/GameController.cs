@@ -1,31 +1,34 @@
-﻿using Application.Abstracts;
+using Application.Abstracts;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WaspEngine.Server.Controllers
 {
     [ApiController]
-    [Route("Api/V1/[controller]")]
+    [Route("api/V1/[controller]")]
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
 
-        public GameController(IGameService ggameService)
+        public GameController(IGameService gameService)
         {
-            _gameService = ggameService;
+            _gameService = gameService;
         }
 
-        [HttpGet(Name = "Game")]
-        public async Task<IEnumerable<Game>> Game()
+        [HttpGet("Game", Name = "GetGames")]
+        public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         {
-            return await _gameService.GetGamesAsync();
+            var games = await _gameService.GetGamesAsync();
+
+            return Ok(games);
         }
 
-        [HttpPost(Name = "Create")]
-        public async Task Create()
+        [HttpPost("Create", Name = "CreateGame")]
+        public async Task<ActionResult<Game>> CreateGame()
         {
-            await _gameService.CreateGameAsync();
+            var game = await _gameService.CreateGameAsync();
+
+            return Ok(game);
         }
     }
 }

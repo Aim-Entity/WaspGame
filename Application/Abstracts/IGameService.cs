@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +9,7 @@ namespace Application.Abstracts
     {
         public Task<IEnumerable<Game>> GetGamesAsync();
 
-        public Task CreateGameAsync();
+        public Task<Game> CreateGameAsync();
 
         public Task RecoverWaspsAsync();
     }

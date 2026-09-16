@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
@@ -9,16 +10,18 @@ namespace Domain.Entities
         protected Wasp(int initialEnergy)
         {
             Energy = initialEnergy;
+            MaxEnergy = initialEnergy;
         }
 
         public long Id { get; set; }
         public int Energy { get; set; }
+        public int MaxEnergy { get; set; }
         public bool IsKnocked { get; set; } = false;
     }
 
     public sealed class Queen : Wasp
     {
-        public Queen() : base(100) { }   
+        public Queen() : base(100) { }
     }
 
     public sealed class Drone : Wasp

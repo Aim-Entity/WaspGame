@@ -1,4 +1,4 @@
-﻿using Application.Abstracts;
+using Application.Abstracts;
 using Application.Abstracts.Repositories;
 using Domain.Entities;
 using System;
@@ -16,10 +16,9 @@ namespace Application.Services
             _gameRepository = gameRepository;
         }
 
-        public async Task CreateGameAsync()
+        public Task<Game> CreateGameAsync()
         {
-            var Game = new Game();
-            await _gameRepository.AddAsync(Game);
+            return _gameRepository.AddAsync(Game.Create());
         }
 
         public Task<IEnumerable<Game>> GetGamesAsync()

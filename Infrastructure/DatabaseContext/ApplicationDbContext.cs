@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DatabaseContext
@@ -17,8 +17,18 @@ namespace Infrastructure.DatabaseContext
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Game>();
-            modelBuilder.Entity<Wasp>();
+            modelBuilder.Entity<Game>(game =>
+            {
+                game.HasKey(g => g.Id);
+                game.HasMany(g => g.Wasps)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Wasp>().HasKey(w => w.Id);
+            modelBuilder.Entity<Queen>();
+            modelBuilder.Entity<Drone>();
+            modelBuilder.Entity<Worker>();
         }
     }
 }

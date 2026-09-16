@@ -1,6 +1,7 @@
-﻿using Application.Abstracts.Repositories;
+using Application.Abstracts.Repositories;
 using Domain.Entities;
 using Infrastructure.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -15,13 +16,26 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Game>> GetAllAsync()
         {
-            return _context.Games;
+            return await _context.Games
+                 .Include(g => g.Wasps)
+                 .AsNoTracking()
+                 .ToListAsync();
         }
 
-        public async Task AddAsync(Game game)
+        public async Task<Game?> GetByIdAsync(long id)
         {
-            _context.Games.Add(game);
+            return await _context.Games
+                 .Include(g => g.Wasps)
+                 .AsNoTracking()
+                 .FirstOrDefaultAsync(g => g.Id == id);
         }
 
+        public async Task<Game> AddAsync(Game game)
+        {
+            await _context.Games.AddAsync(game);
+            await _context.SaveChangesAsync();
+
+            return game;
+        }
     }
 }
