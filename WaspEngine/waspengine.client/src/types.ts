@@ -14,6 +14,8 @@ export interface Game {
     id: number;
     wasps: Wasp[];
     isGameDone: boolean;
+    /** How long a knocked-out wasp stays down, and the cap for its countdown */
+    knockoutSeconds: number;
 }
 
 export interface ZapResult {

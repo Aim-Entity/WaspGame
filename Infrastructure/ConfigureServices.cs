@@ -17,6 +17,7 @@ namespace Infrastructure
             });
 
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IWaspRepository, WaspRepository>();
 
             return services;
         }

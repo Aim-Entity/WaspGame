@@ -23,9 +23,18 @@ namespace Infrastructure.DatabaseContext
                 game.HasMany(g => g.Wasps)
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
+
+                // Derived from a constant, so there is nothing to persist.
+                game.Ignore(g => g.KnockoutSeconds);
             });
 
-            modelBuilder.Entity<Wasp>().HasKey(w => w.Id);
+            modelBuilder.Entity<Wasp>(wasp =>
+            {
+                wasp.HasKey(w => w.Id);
+
+                wasp.Ignore(w => w.Type);
+            });
+
             modelBuilder.Entity<Queen>();
             modelBuilder.Entity<Drone>();
             modelBuilder.Entity<Worker>();

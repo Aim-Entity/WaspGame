@@ -8,6 +8,12 @@ namespace Application.Abstracts.Repositories
 
         public Task<Game?> GetByIdAsync(long id);
 
+        public Task<Game?> GetCurrentAsync();
+
         public Task<Game> AddAsync(Game game);
+
+        public Task<Game> UpdateAsync(Game game);
+
+        public Task<bool> DeleteAsync(long id);
     }
 }

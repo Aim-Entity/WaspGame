@@ -1,4 +1,4 @@
-﻿using Application.Abstracts;
+using Application.Abstracts;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +9,7 @@ namespace Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IWaspService, WaspService>();
 
             return services;
         }

@@ -13,18 +13,26 @@ export function useGame() {
     const [error, setError] = useState<string | null>(null);
     const [now, setNow] = useState(Date.now);
 
-    const run = useCallback(async (action: () => Promise<Game>) => {
-        try {
-            setGame(await action());
-            setError(null);
-        } catch (e) {
-            setError(toMessage(e));
-        }
+    const commit = useCallback((next: Game) => {
+        setGame(next);
+        setNow(Date.now());
+        setError(null);
     }, []);
 
+    const run = useCallback(
+        async (action: () => Promise<Game>) => {
+            try {
+                commit(await action());
+            } catch (e) {
+                setError(toMessage(e));
+            }
+        },
+        [commit],
+    );
+
     useEffect(() => {
-        api.getGame().then(setGame, (e) => setError(toMessage(e)));
-    }, []);
+        api.getGame().then(commit, (e) => setError(toMessage(e)));
+    }, [commit]);
 
     useEffect(() => {
         if (!game || game.isGameDone || !game.wasps.some((w) => w.isKnocked))

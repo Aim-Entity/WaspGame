@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-
 namespace Domain.Entities
 {
     public abstract class Wasp
@@ -17,6 +12,45 @@ namespace Domain.Entities
         public int Energy { get; set; }
         public int MaxEnergy { get; set; }
         public bool IsKnocked { get; set; } = false;
+
+        public DateTimeOffset? KnockedUntil { get; set; }
+
+        public string Type => GetType().Name;
+
+        public void TakeDamage(int damage, TimeSpan knockoutDuration)
+        {
+            if (IsKnocked)
+            {
+                return;
+            }
+
+            Energy = Math.Max(0, Energy - damage);
+
+            if (Energy == 0)
+            {
+                IsKnocked = true;
+                KnockedUntil = DateTimeOffset.UtcNow.Add(knockoutDuration);
+            }
+        }
+
+        public void Recover()
+        {
+            Energy = MaxEnergy;
+            IsKnocked = false;
+            KnockedUntil = null;
+        }
+
+        public bool RecoverIfDue()
+        {
+            if (!IsKnocked || KnockedUntil is null || KnockedUntil > DateTimeOffset.UtcNow)
+            {
+                return false;
+            }
+
+            Recover();
+
+            return true;
+        }
     }
 
     public sealed class Queen : Wasp

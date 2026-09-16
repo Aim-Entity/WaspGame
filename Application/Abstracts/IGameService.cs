@@ -1,7 +1,4 @@
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Abstracts
 {
@@ -9,7 +6,19 @@ namespace Application.Abstracts
     {
         public Task<IEnumerable<Game>> GetGamesAsync();
 
+        public Task<Game?> GetGameAsync(long id);
+
+        public Task<Game> GetCurrentGameAsync();
+
         public Task<Game> CreateGameAsync();
+
+        public Task<Game> ResetGameAsync();
+
+        public Task<ZapResult> ZapAsync();
+
+        public Task<ZapResult?> ZapAsync(long gameId);
+
+        public Task<bool> DeleteGameAsync(long id);
 
         public Task RecoverWaspsAsync();
     }
