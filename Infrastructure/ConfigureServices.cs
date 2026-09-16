@@ -1,15 +1,14 @@
-﻿using Application.Abstracts.Repositories;
+using Application.Abstracts.Repositories;
 using Infrastructure.DatabaseContext;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -17,7 +16,6 @@ namespace Infrastructure
             });
 
             services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<IWaspRepository, WaspRepository>();
 
             return services;
         }

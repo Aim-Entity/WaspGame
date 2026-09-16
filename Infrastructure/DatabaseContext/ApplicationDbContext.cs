@@ -11,7 +11,6 @@ namespace Infrastructure.DatabaseContext
         }
 
         public DbSet<Game> Games { get; set; }
-        public DbSet<Wasp> Wasps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +23,6 @@ namespace Infrastructure.DatabaseContext
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
 
-                // Derived from a constant, so there is nothing to persist.
                 game.Ignore(g => g.KnockoutSeconds);
             });
 

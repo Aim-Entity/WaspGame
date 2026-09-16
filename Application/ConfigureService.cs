@@ -9,7 +9,6 @@ namespace Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IGameService, GameService>();
-            services.AddScoped<IWaspService, WaspService>();
 
             return services;
         }

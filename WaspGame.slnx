@@ -1,8 +1,5 @@
-<Solution>
+﻿<Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/Common/">
-    <Project Path="Shared/Shared.csproj" />
-  </Folder>
   <Folder Name="/src/Core/">
     <Project Path="Application/Application.csproj" Id="6d2f3ed2-9e61-48a9-8920-a3f8ffcbc1c0" />
     <Project Path="Domain/Domain.csproj" Id="6ab0e3e1-fbb8-4ec3-94f5-b988ba31e837" />
