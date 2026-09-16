@@ -18,9 +18,14 @@
       <Version>10.*-*</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
+	 
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
     <ProjectReference Include="..\waspengine.client\waspengine.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

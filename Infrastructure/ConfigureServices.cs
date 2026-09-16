@@ -1,4 +1,6 @@
-﻿using Infrastructure.DatabaseContext;
+﻿using Application.Abstracts.Repositories;
+using Infrastructure.DatabaseContext;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,8 @@ namespace Infrastructure
             {
                 options.UseInMemoryDatabase("MyDatabase");
             });
+
+            services.AddScoped<IGameRepository, GameRepository>();
 
             return services;
         }

@@ -17,5 +17,11 @@ namespace Infrastructure.Repositories
         {
             return _context.Games;
         }
+
+        public async Task AddAsync(Game game)
+        {
+            _context.Games.Add(game);
+        }
+
     }
 }

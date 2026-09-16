@@ -3,8 +3,13 @@
   <Folder Name="/src/Common/">
     <Project Path="Shared/Shared.csproj" />
   </Folder>
-  <Folder Name="/src/Core/" />
-  <Folder Name="/src/Infrastructure/" />
+  <Folder Name="/src/Core/">
+    <Project Path="Application/Application.csproj" Id="6d2f3ed2-9e61-48a9-8920-a3f8ffcbc1c0" />
+    <Project Path="Domain/Domain.csproj" Id="6ab0e3e1-fbb8-4ec3-94f5-b988ba31e837" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="Infrastructure/Infrastructure.csproj" Id="894e766d-2f36-4819-b5f4-c239d20d21de" />
+  </Folder>
   <Folder Name="/src/Presentation/">
     <Project Path="WaspEngine/waspengine.client/waspengine.client.esproj">
       <Build />
