@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { api } from "@/api";
+import { env } from "@/env";
 import type { Game } from "@/types";
 
 const toMessage = (e: unknown) => (e instanceof Error ? e.message : String(e));
@@ -47,7 +48,7 @@ export function useGame() {
                 )
             )
                 run(api.getGame);
-        }, 500);
+        }, env.pollIntervalMs);
         return () => clearInterval(timer);
     }, [game, run]);
 
