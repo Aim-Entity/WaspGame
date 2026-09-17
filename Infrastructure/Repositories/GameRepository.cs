@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
 
             foreach (var previous in active)
             {
-                previous.Deactivate();
+                previous.IsActive = false;
             }
 
             await _context.Games.AddAsync(game, cancellationToken);

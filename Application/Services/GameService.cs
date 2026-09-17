@@ -1,5 +1,6 @@
 using Application.Abstracts;
 using Application.Abstracts.Repositories;
+using Application.Utils;
 using Domain.Entities;
 
 namespace Application.Services
@@ -37,7 +38,7 @@ namespace Application.Services
 
         public Task<Game> ResetGameAsync(CancellationToken cancellationToken = default)
         {
-            return _gameRepository.ReplaceCurrentAsync(Game.Create(), cancellationToken);
+            return _gameRepository.ReplaceCurrentAsync(GameLogic.Create(), cancellationToken);
         }
 
         public async Task<ZapResult> ZapAsync(CancellationToken cancellationToken = default)
@@ -48,7 +49,7 @@ namespace Application.Services
             if (game is null)
             {
                 // Zap before persisting so a first-ever zap is a single write, not an add followed by an update.
-                var created = Game.Create();
+                var created = GameLogic.Create();
                 var firstOutcome = created.Zap(_random, now);
                 var persisted = await _gameRepository.ReplaceCurrentAsync(created, cancellationToken);
 
