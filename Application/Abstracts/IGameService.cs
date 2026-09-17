@@ -4,10 +4,10 @@ namespace Application.Abstracts
 {
     public interface IGameService
     {
-        public Task<Game> GetCurrentGameAsync();
+        public Task<Game> GetOrCreateCurrentGameAsync(CancellationToken cancellationToken = default);
 
-        public Task<Game> ResetGameAsync();
+        public Task<Game> ResetGameAsync(CancellationToken cancellationToken = default);
 
-        public Task<ZapResult> ZapAsync();
+        public Task<ZapResult> ZapAsync(CancellationToken cancellationToken = default);
     }
 }

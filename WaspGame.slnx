@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/Core/">
     <Project Path="Application/Application.csproj" Id="6d2f3ed2-9e61-48a9-8920-a3f8ffcbc1c0" />
@@ -13,5 +13,9 @@
       <Deploy />
     </Project>
     <Project Path="WaspEngine/WaspEngine.Server/WaspEngine.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="Application.UnitTests/Application.UnitTests.csproj" />
+    <Project Path="Infrastructure.IntegrationTests/Infrastructure.IntegrationTests.csproj" />
   </Folder>
 </Solution>

@@ -12,13 +12,15 @@ namespace Domain.Entities
 
         public bool IsGameDone { get; set; } = false;
 
-        /// <summary>How long a knocked out wasp stays down. The client caps its countdown at this.</summary>
+        public bool IsActive { get; set; } = true;
+
         public int KnockoutSeconds => (int)KnockoutDuration.TotalSeconds;
 
         public static Game Create()
         {
             return new Game
             {
+                IsActive = true,
                 Wasps = new List<Wasp>
                 {
                     new Queen(),
@@ -28,7 +30,12 @@ namespace Domain.Entities
             };
         }
 
-        public bool RecoverWasps()
+        public void Deactivate()
+        {
+            IsActive = false;
+        }
+
+        public bool RecoverWasps(DateTimeOffset now)
         {
             if (IsGameDone)
             {
@@ -39,45 +46,45 @@ namespace Domain.Entities
 
             foreach (var wasp in Wasps)
             {
-                recovered |= wasp.RecoverIfDue();
+                recovered |= wasp.RecoverIfDue(now);
             }
 
             return recovered;
         }
 
-        public bool Refresh()
+        public bool Refresh(DateTimeOffset now)
         {
             var wasDone = IsGameDone;
-            var recovered = RecoverWasps();
+            var recovered = RecoverWasps(now);
 
             UpdateGameDone();
 
             return recovered || wasDone != IsGameDone;
         }
 
-        public Wasp? Zap(Random random)
+        public ZapOutcome Zap(Random random, DateTimeOffset now)
         {
-            RecoverWasps();
+            var changed = RecoverWasps(now);
 
             if (IsGameDone)
             {
-                return null;
+                return new ZapOutcome(null, changed);
             }
 
             var targets = Wasps.Where(w => !w.IsKnocked).ToList();
 
             if (targets.Count == 0)
             {
-                return null;
+                return new ZapOutcome(null, changed);
             }
 
             var hit = targets[random.Next(targets.Count)];
 
-            hit.TakeDamage(ZapDamage, KnockoutDuration);
+            changed |= hit.TakeDamage(ZapDamage, KnockoutDuration, now);
 
             UpdateGameDone();
 
-            return hit;
+            return new ZapOutcome(hit, changed);
         }
 
         public void UpdateGameDone()
@@ -86,5 +93,18 @@ namespace Domain.Entities
         }
     }
 
-    public sealed record ZapResult(Game Game, long? HitWaspId);
+    public readonly record struct ZapOutcome(Wasp? Hit, bool StateChanged);
+
+    public sealed class ZapResult
+    {
+        public ZapResult(Game game, long? hitWaspId)
+        {
+            Game = game;
+            HitWaspId = hitWaspId;
+        }
+
+        public Game Game { get; }
+
+        public long? HitWaspId { get; }
+    }
 }

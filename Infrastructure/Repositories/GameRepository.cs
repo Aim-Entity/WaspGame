@@ -14,26 +14,39 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Game?> GetCurrentAsync()
+        public async Task<Game?> GetCurrentAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Games
                  .Include(g => g.Wasps)
-                 .OrderByDescending(g => g.Id)
-                 .FirstOrDefaultAsync();
+                 .Where(g => g.IsActive)
+                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<Game> AddAsync(Game game)
+        public async Task<Game> ReplaceCurrentAsync(Game game, CancellationToken cancellationToken = default)
         {
-            await _context.Games.AddAsync(game);
-            await _context.SaveChangesAsync();
+            var active = await _context.Games
+                .Where(g => g.IsActive)
+                .ToListAsync(cancellationToken);
+
+            foreach (var previous in active)
+            {
+                previous.Deactivate();
+            }
+
+            await _context.Games.AddAsync(game, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return game;
         }
 
-        public async Task<Game> UpdateAsync(Game game)
+        public async Task<Game> UpdateAsync(Game game, CancellationToken cancellationToken = default)
         {
-            _context.Games.Update(game);
-            await _context.SaveChangesAsync();
+            if (_context.Entry(game).State == EntityState.Detached)
+            {
+                _context.Games.Update(game);
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
 
             return game;
         }

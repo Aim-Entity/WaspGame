@@ -17,20 +17,24 @@ namespace Domain.Entities
 
         public string Type => GetType().Name;
 
-        public void TakeDamage(int damage, TimeSpan knockoutDuration)
+        public bool TakeDamage(int damage, TimeSpan knockoutDuration, DateTimeOffset now)
         {
             if (IsKnocked)
             {
-                return;
+                return false;
             }
+
+            var previousEnergy = Energy;
 
             Energy = Math.Max(0, Energy - damage);
 
             if (Energy == 0)
             {
                 IsKnocked = true;
-                KnockedUntil = DateTimeOffset.UtcNow.Add(knockoutDuration);
+                KnockedUntil = now.Add(knockoutDuration);
             }
+
+            return Energy != previousEnergy;
         }
 
         public void Recover()
@@ -40,9 +44,9 @@ namespace Domain.Entities
             KnockedUntil = null;
         }
 
-        public bool RecoverIfDue()
+        public bool RecoverIfDue(DateTimeOffset now)
         {
-            if (!IsKnocked || KnockedUntil is null || KnockedUntil > DateTimeOffset.UtcNow)
+            if (!IsKnocked || KnockedUntil is null || KnockedUntil > now)
             {
                 return false;
             }

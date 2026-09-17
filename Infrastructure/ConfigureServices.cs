@@ -8,11 +8,15 @@ namespace Infrastructure
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        public const string DefaultDatabaseName = "WaspGame";
+
+        public static IServiceCollection AddInfrastructureServices(
+            this IServiceCollection services,
+            string? databaseName = null)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseInMemoryDatabase("MyDatabase");
+                options.UseInMemoryDatabase(databaseName ?? DefaultDatabaseName);
             });
 
             services.AddScoped<IGameRepository, GameRepository>();

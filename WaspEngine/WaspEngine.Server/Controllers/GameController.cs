@@ -17,28 +17,25 @@ namespace WaspEngine.Server.Controllers
         }
 
         [HttpGet(Name = "GetCurrentGame")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Game>> GetCurrentGame()
+        public async Task<ActionResult<Game>> GetCurrentGame(CancellationToken cancellationToken)
         {
-            var game = await _gameService.GetCurrentGameAsync();
+            var game = await _gameService.GetOrCreateCurrentGameAsync(cancellationToken);
 
             return Ok(game);
         }
 
         [HttpPost("reset", Name = "ResetGame")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Game>> ResetGame()
+        public async Task<ActionResult<Game>> ResetGame(CancellationToken cancellationToken)
         {
-            var game = await _gameService.ResetGameAsync();
+            var game = await _gameService.ResetGameAsync(cancellationToken);
 
             return Ok(game);
         }
 
         [HttpPost("zap", Name = "ZapCurrentGame")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ZapResult>> Zap()
+        public async Task<ActionResult<ZapResult>> Zap(CancellationToken cancellationToken)
         {
-            var result = await _gameService.ZapAsync();
+            var result = await _gameService.ZapAsync(cancellationToken);
 
             return Ok(result);
         }
